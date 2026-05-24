@@ -12,6 +12,10 @@ class ReportCreate(BaseModel):
     school: Optional[str] = None
 
 
+class ReportStatusUpdate(BaseModel):
+    status: ReportStatus
+
+
 class ReportResponse(BaseModel):
     id: int
     anonymous_id: str

@@ -13,8 +13,9 @@ api.interceptors.request.use((config) => {
 
 export const chatAPI    = { send: (messages) => api.post('/api/chat/', { messages }) }
 export const reportsAPI = {
-  submit:    (data) => api.post('/api/reports/', data),
-  mySchool:  ()     => api.get('/api/reports/my-school'),
+  submit:       (data)         => api.post('/api/reports/', data),
+  mySchool:     ()             => api.get('/api/reports/my-school'),
+  updateStatus: (id, status)   => api.patch(`/api/reports/${id}/status`, { status }),
 }
 export const statsAPI   = {
   hbsc:    () => api.get('/api/stats/hbsc'),

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.deps import get_current_user, require_school
 from app.models.models import Report, User
-from app.schemas.report import ReportCreate, ReportResponse
+from app.schemas.report import ReportCreate, ReportResponse, ReportStatusUpdate
 
 router = APIRouter()
 
@@ -39,6 +39,25 @@ def list_school_reports(
         .order_by(Report.created_at.desc())
         .all()
     )
+
+
+@router.patch("/{report_id}/status", response_model=ReportResponse)
+def update_report_status(
+    report_id: int,
+    payload: ReportStatusUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_school),
+):
+    """School-only: update the status of a report that belongs to this school."""
+    report = db.query(Report).filter(Report.id == report_id).first()
+    if not report:
+        raise HTTPException(status_code=404, detail="Report not found")
+    if report.school != current_user.username:
+        raise HTTPException(status_code=403, detail="Not your school's report")
+    report.status = payload.status
+    db.commit()
+    db.refresh(report)
+    return report
 
 
 @router.get("/", response_model=list[ReportResponse])
