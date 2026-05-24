@@ -5,7 +5,7 @@ from app.core.database import get_db
 from app.core.security import hash_password, verify_password, create_access_token
 from app.core.deps import get_current_user
 from app.models.models import User
-from app.schemas.auth import RegisterRequest, LoginRequest, TokenResponse, UserResponse
+from app.schemas.auth import RegisterRequest, StudentRegisterRequest, LoginRequest, TokenResponse, UserResponse
 
 router = APIRouter()
 
@@ -35,6 +35,28 @@ def register(payload: RegisterRequest, db: Session = Depends(get_db)):
         role=user.role,
         username=user.username,
         full_name=user.full_name,
+    )
+
+
+@router.post("/register/student", response_model=TokenResponse, status_code=201)
+def register_student(payload: StudentRegisterRequest, db: Session = Depends(get_db)):
+    if db.query(User).filter(User.username == payload.username).first():
+        raise HTTPException(status_code=400, detail="Username already taken")
+
+    user = User(
+        username=payload.username,
+        hashed_password=hash_password(payload.password),
+        role="student",
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_access_token({"sub": str(user.id)})
+    return TokenResponse(
+        access_token=token,
+        role=user.role,
+        username=user.username,
     )
 
 

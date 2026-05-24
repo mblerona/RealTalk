@@ -10,6 +10,11 @@ class RegisterRequest(BaseModel):
     email: str               # school email e.g. "info@sourade.edu.mk"
 
 
+class StudentRegisterRequest(BaseModel):
+    username: str
+    password: str
+
+
 class LoginRequest(BaseModel):
     username: str
     password: str

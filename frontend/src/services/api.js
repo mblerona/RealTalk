@@ -23,9 +23,10 @@ export const statsAPI   = {
   school:  () => api.get('/api/stats/school'),
 }
 export const authAPI    = {
-  login:    (data) => api.post('/api/auth/login', data),
-  register: (data) => api.post('/api/auth/register', data),
-  me:       ()     => api.get('/api/auth/me'),
+  login:           (data) => api.post('/api/auth/login', data),
+  register:        (data) => api.post('/api/auth/register', data),
+  registerStudent: (data) => api.post('/api/auth/register/student', data),
+  me:              ()     => api.get('/api/auth/me'),
 }
 export const journalAPI = {
   create: (data) => api.post('/api/journal/', data),

@@ -69,7 +69,7 @@ export default function Layout() {
               </>
             ) : (
               <NavLink to="/login" className="text-sm font-medium text-primary hover:underline">
-                School login
+                Login
               </NavLink>
             )}
           </div>

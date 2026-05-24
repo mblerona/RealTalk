@@ -23,8 +23,9 @@ export default function Journal() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (user?.role === 'school') { navigate('/dashboard'); return }
     journalAPI.list().then(r => setEntries(r.data)).catch(() => {}).finally(() => setLoading(false))
-  }, [])
+  }, [user])
 
   const handleSubmit = async () => {
     if (!form.mood_score) return setError('Please select your mood first')
