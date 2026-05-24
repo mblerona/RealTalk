@@ -10,8 +10,8 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
-    # Anthropic
-    ANTHROPIC_API_KEY: str = ""
+    # Groq
+    GROQ_API_KEY: str = ""
 
     # Frontend
     FRONTEND_URL: str = "http://localhost:5173"

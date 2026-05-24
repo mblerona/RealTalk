@@ -28,14 +28,15 @@ export default function Layout() {
     <div className="min-h-screen flex flex-col bg-bg">
       {/* ── Top navbar ── */}
       <header className="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div className="w-full px-6 h-14 grid grid-cols-3 items-center">
 
+          {/* Left — logo */}
           <span className="font-display text-xl font-bold text-primary tracking-tight">
             RealTalk
           </span>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          {/* Center — nav */}
+          <nav className="hidden md:flex items-center justify-center gap-1">
             {navItems.map(({ to, label, Icon }) => (
               <NavLink
                 key={to}
@@ -52,8 +53,8 @@ export default function Layout() {
             ))}
           </nav>
 
-          {/* Auth area */}
-          <div className="flex items-center gap-2">
+          {/* Right — auth */}
+          <div className="flex items-center justify-end gap-2">
             {user ? (
               <>
                 <span className="text-xs text-muted hidden sm:flex items-center gap-1">

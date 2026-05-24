@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List
-import anthropic
+from groq import Groq
 
 from app.core.config import settings
 
@@ -33,13 +33,15 @@ class ChatRequest(BaseModel):
 
 @router.post("/")
 def chat(request: ChatRequest):
-    client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
+    client = Groq(api_key=settings.GROQ_API_KEY)
 
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
         max_tokens=512,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": m.role, "content": m.content} for m in request.messages],
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            *[{"role": m.role, "content": m.content} for m in request.messages],
+        ],
     )
 
-    return {"reply": response.content[0].text}
+    return {"reply": response.choices[0].message.content}

@@ -53,8 +53,8 @@ export default function Journal() {
 
   return (
     <div>
-      <h2 className="font-display text-3xl font-bold text-dark mb-1">My Journal</h2>
-      <p className="text-muted text-sm mb-6">Private daily check-ins — only you can see this.</p>
+      <h2 className="font-display text-3xl font-bold text-dark mb-2">My Journal</h2>
+      <p className="text-muted text-sm mb-8">Private daily check-ins — only you can see this.</p>
 
       {/* Check-in card */}
       <div className="bg-white rounded-2xl p-5 border border-border shadow-card mb-6">
